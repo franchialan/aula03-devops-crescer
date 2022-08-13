@@ -116,7 +116,7 @@ jobs:
           
   push-image:
     name: Enviar imagem Heroku
-    needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests, regression-tests, functional-tests, create-app]
+    needs: [create-app]
     runs-on: ubuntu-latest
   
     steps:
