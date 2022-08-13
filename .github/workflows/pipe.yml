@@ -113,7 +113,7 @@ jobs:
           heroku_app_name: "teste-app-java-devops" #Must be unique in Heroku
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           useforce: true
-          usedocker: false
+          usedocker: true
           
   push-image:
     name: Enviar imagem Heroku
