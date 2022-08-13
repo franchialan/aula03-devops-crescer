@@ -117,11 +117,12 @@ jobs:
         registry: registry.heroku.com
         username: ${{ secrets.HEROKU_EMAIL }}
         password: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: "teste-app-java-devops"
     - name: Criação e envio da imagem
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: registry.heroku.com/app-teste-praquemficou/web:latest
+        tags: registry.heroku.com/teste-app-java-devops/web:latest
 
   deploy:
     name: Publica ambiente Desenvolvimento
@@ -136,7 +137,7 @@ jobs:
         username: ${{ secrets.HEROKU_EMAIL }}
         password: ${{ secrets.HEROKU_API_KEY }}
     - name: Publicação
-      run: heroku container:release -a app-teste-praquemficou web 
+      run: heroku container:release -a teste-app-java-devops web 
       env:
         HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
