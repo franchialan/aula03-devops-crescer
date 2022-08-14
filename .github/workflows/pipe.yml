@@ -169,4 +169,4 @@ jobs:
       - name: Cloud k6 test
         env:
           K6_CLOUD_TOKEN: ${{ secrets.k6_cloud_token }}
-        run: k6 cloud ./test.js
+        run: --file pom.xml
