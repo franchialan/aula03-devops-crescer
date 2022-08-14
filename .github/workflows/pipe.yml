@@ -99,25 +99,39 @@ jobs:
     
     steps:
     - name: Simula execução de testes funcionais
-      run: echo Testes funcionais executados com sucesso         
-  
-  create-app:
-   name: Criar Web App no Heroku
-   needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests, regression-tests, functional-tests]
-   runs-on: ubuntu-latest
-   steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "teste-app-java-devops" #Must be unique in Heroku
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+      run: echo Testes funcionais executados com sucesso       
+      
+  k6_cloud_test:
+    name: k6 cloud test run
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Run k6 cloud test
+      uses: k6io/action@v0.1
+      with:
+        filename: --file pom.xml
+        cloud: true
+        token: ${{ secrets.K6_CLOUD_API_TOKEN }}
+        
+  #create-app:
+  # name: Criar Web App no Heroku
+   #needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests, regression-tests, functional-tests]
+   #runs-on: ubuntu-latest
+   #steps:
+      #- uses: actions/checkout@v2
+      #- uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+       #  with:
+        #  heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        #  heroku_app_name: "teste-app-java-devops" #Must be unique in Heroku
+        #  heroku_email: ${{ secrets.HEROKU_EMAIL }}
          # useforce: true
          # usedocker: true
           
   push-image:
     name: Enviar imagem Heroku
-    needs: [create-app]
+    needs: [code-quality, sec-tests, tests,  integration-tests, mutation-tests, regression-tests, functional-tests]
     runs-on: ubuntu-latest
   
     steps:
